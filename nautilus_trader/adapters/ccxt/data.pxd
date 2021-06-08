@@ -90,3 +90,6 @@ cdef class CCXTDataClient(LiveMarketDataClient):
         int size_precision,
     )
     cdef str _make_timeframe(self, BarSpecification bar_spec)
+
+cdef class BinanceCCXTDataClient(CCXTDataClient):
+    pass

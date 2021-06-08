@@ -15,6 +15,7 @@
 
 import os
 
+from nautilus_trader.adapters.ccxt.data cimport BinanceCCXTDataClient
 from nautilus_trader.adapters.ccxt.data cimport CCXTDataClient
 from nautilus_trader.adapters.ccxt.execution cimport BinanceCCXTExecutionClient
 from nautilus_trader.adapters.ccxt.execution cimport BitmexCCXTExecutionClient
@@ -97,13 +98,24 @@ cdef class CCXTDataClientFactory(LiveDataClientFactory):
         client = client_cls(internal_config)
         client.set_sandbox_mode(config.get("sandbox_mode", False))
 
+        # Set exchange name
+        exchange_name = client.name.upper()
+
         # Create client
-        return CCXTDataClient(
-            client=client,
-            engine=engine,
-            clock=clock,
-            logger=logger,
-        )
+        if exchange_name == "BINANCE":
+            return BinanceCCXTDataClient(
+                client=client,
+                engine=engine,
+                clock=clock,
+                logger=logger,
+            )
+        else:
+            return CCXTDataClient(
+                client=client,
+                engine=engine,
+                clock=clock,
+                logger=logger,
+            )
 
 
 cdef class CCXTExecutionClientFactory(LiveExecutionClientFactory):

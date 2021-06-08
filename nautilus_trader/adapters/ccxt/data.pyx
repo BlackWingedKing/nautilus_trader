@@ -1203,3 +1203,37 @@ cdef class CCXTDataClient(LiveMarketDataClient):
             return None  # Invalid aggregation
 
         return timeframe
+
+cdef class BinanceCCXTDataClient(CCXTDataClient):
+    """
+    Provides a CCXT pro execution client for the Binance exchange.
+    """
+
+    def __init__(
+        self,
+        client not None,
+        LiveDataEngine engine not None,
+        LiveClock clock not None,
+        Logger logger not None,
+    ):
+        """
+        Initialize a new instance of the ``BinanceCCXTDataClient`` class.
+
+        Parameters
+        ----------
+        client : ccxtpro.Exchange
+            The unified CCXT client.
+        engine : LiveDataEngine
+            The live data engine for the client.
+        clock : LiveClock
+            The clock for the client.
+        logger : Logger
+            The logger for the client.
+
+        """
+        super().__init__(
+            client=client,
+            engine=engine,
+            clock=clock,
+            logger=logger
+        )
