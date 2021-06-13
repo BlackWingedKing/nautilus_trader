@@ -25,6 +25,7 @@ from nautilus_trader.model.enums import OrderBookLevel
 from nautilus_trader.model.orderbook.book import OrderBookSnapshot
 from tests.test_kit.providers import TestDataProvider
 from tests.test_kit.providers import TestInstrumentProvider
+from tests.test_kit.stubs import MyData
 
 
 ETHUSDT_BINANCE = TestInstrumentProvider.ethusdt_binance()
@@ -60,32 +61,27 @@ class TestBacktestDataProducer:
             level=OrderBookLevel.L2,
             bids=[[1550.15, 0.51], [1580.00, 1.20]],
             asks=[[1552.15, 1.51], [1582.00, 2.20]],
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
-        data_type = DataType(str, metadata={"news_wire": "hacks"})
+        data_type = DataType(MyData, metadata={"news_wire": "hacks"})
         generic_data1 = [
             GenericData(
-                data_type, data="AAPL hacked", timestamp_origin_ns=0, timestamp_ns=0
+                data_type,
+                data=MyData("AAPL hacked"),
             ),
             GenericData(
                 data_type,
-                data="AMZN hacked",
-                timestamp_origin_ns=500_000,
-                timestamp_ns=500_000,
+                data=MyData("AMZN hacked", 500_000, 500_000),
             ),
             GenericData(
                 data_type,
-                data="NFLX hacked",
-                timestamp_origin_ns=1_000_000,
-                timestamp_ns=1_000_000,
+                data=MyData("NFLX hacked", 1_000_000, 1_000_000),
             ),
             GenericData(
                 data_type,
-                data="MSFT hacked",
-                timestamp_origin_ns=2_000_000,
-                timestamp_ns=2_000_000,
+                data=MyData("MSFT hacked", 2_000_000, 2_000_000),
             ),
         ]
 
@@ -94,8 +90,8 @@ class TestBacktestDataProducer:
             level=OrderBookLevel.L2,
             bids=[[1551.15, 0.51], [1581.00, 1.20]],
             asks=[[1553.15, 1.51], [1583.00, 2.20]],
-            timestamp_origin_ns=1_000_000,
-            timestamp_ns=1_000_000,
+            ts_event_ns=1_000_000,
+            ts_recv_ns=1_000_000,
         )
 
         producer = BacktestDataProducer(
@@ -113,7 +109,7 @@ class TestBacktestDataProducer:
             streamed_data.append(producer.next())
 
         # Assert
-        timestamps = [x.timestamp_ns for x in streamed_data]
+        timestamps = [x.ts_recv_ns for x in streamed_data]
         assert timestamps == [0, 0, 500000, 1000000, 1000000, 2000000]
         assert producer.min_timestamp_ns == 0
         assert producer.max_timestamp_ns == 2_000_000
@@ -146,7 +142,7 @@ class TestBacktestDataProducer:
         next_data = producer.next()
 
         # Assert
-        assert next_data.timestamp_ns == 1359676799800000000
+        assert next_data.ts_recv_ns == 1359676799800000000
         assert next_data.instrument_id == USDJPY_SIM.id
         assert str(next_data.bid) == "91.715"
         assert str(next_data.ask) == "91.717"

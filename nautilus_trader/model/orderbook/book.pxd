@@ -15,7 +15,7 @@
 
 from libc.stdint cimport int64_t
 
-from nautilus_trader.model.c_enums.orderbook_delta cimport OrderBookDeltaType
+from nautilus_trader.model.c_enums.delta_type cimport DeltaType
 from nautilus_trader.model.c_enums.orderbook_level cimport OrderBookLevel
 from nautilus_trader.model.data cimport Data
 from nautilus_trader.model.identifiers cimport InstrumentId
@@ -41,7 +41,7 @@ cdef class OrderBook:
     cdef readonly Ladder asks
     """The order books asks.\n\n:returns: `Ladder`"""
     cdef readonly int64_t last_update_timestamp_ns
-    """The Unix timestamp (nanos) of the last update.\n\n:returns: `int64`"""
+    """The UNIX timestamp (nanos) of the last update.\n\n:returns: `int64`"""
 
     cpdef void add(self, Order order) except *
     cpdef void update(self, Order order) except *
@@ -126,7 +126,7 @@ cdef class OrderBookDeltas(OrderBookData):
 
 
 cdef class OrderBookDelta(OrderBookData):
-    cdef readonly OrderBookDeltaType type
-    """The type of change (ADD, UPDATED, DELETE).\n\n:returns: `OrderBookDeltaType`"""
+    cdef readonly DeltaType type
+    """The type of change (ADD, UPDATED, DELETE, CLEAR).\n\n:returns: `DeltaType`"""
     cdef readonly Order order
     """The order to apply.\n\n:returns: `Order`"""

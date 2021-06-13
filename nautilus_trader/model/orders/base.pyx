@@ -147,7 +147,7 @@ cdef class Order:
         self.timestamp_ns = init.timestamp_ns
         self.time_in_force = init.time_in_force
         self.filled_qty = Quantity.zero_c(precision=0)
-        self.execution_ns = 0
+        self.ts_filled_ns = 0
         self.avg_px = None  # Can be None
         self.slippage = Decimal()
         self.init_id = init.id
@@ -168,6 +168,17 @@ cdef class Order:
                 f"state={self._fsm.state_string_c()}, "
                 f"client_order_id={self.client_order_id.value}"
                 f"{id_string})")
+
+    cpdef dict to_dict(self):
+        """
+        Return a dictionary representation of this object.
+
+        Returns
+        -------
+        dict[str, object]
+
+        """
+        raise NotImplementedError("method must be implemented in the subclass")
 
     cdef OrderState state_c(self) except *:
         return <OrderState>self._fsm.state
@@ -732,7 +743,7 @@ cdef class PassiveOrder(Order):
         self.execution_id = fill.execution_id
         self.liquidity_side = fill.liquidity_side
         self.filled_qty = Quantity(self.filled_qty + fill.last_qty, fill.last_qty.precision)
-        self.execution_ns = fill.execution_ns
+        self.ts_filled_ns = fill.ts_filled_ns
         self.avg_px = self._calculate_avg_px(fill.last_qty, fill.last_px)
         self._set_slippage()
 

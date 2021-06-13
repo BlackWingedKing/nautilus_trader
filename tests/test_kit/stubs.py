@@ -30,6 +30,7 @@ from nautilus_trader.model.bar import BarType
 from nautilus_trader.model.c_enums.account_type import AccountType
 from nautilus_trader.model.c_enums.orderbook_level import OrderBookLevel
 from nautilus_trader.model.currencies import USD
+from nautilus_trader.model.data import Data
 from nautilus_trader.model.enums import AggressorSide
 from nautilus_trader.model.enums import BarAggregation
 from nautilus_trader.model.enums import LiquiditySide
@@ -74,9 +75,24 @@ from tests.test_kit.mocks import MockLiveRiskEngine
 from tests.test_kit.providers import TestInstrumentProvider
 
 
-# Unix epoch is the UTC time at 00:00:00 on 1/1/1970
+# UNIX epoch is the UTC time at 00:00:00 on 1/1/1970
 # https://en.wikipedia.org/wiki/Unix_time
 UNIX_EPOCH = datetime(1970, 1, 1, 0, 0, 0, 0, tzinfo=pytz.utc)
+
+
+class MyData(Data):
+    """
+    Represents an example user defined data class.
+    """
+
+    def __init__(
+        self,
+        value,
+        ts_event_ns=0,
+        timestamp_ns=0,
+    ):
+        super().__init__(ts_event_ns, timestamp_ns)
+        self.value = value
 
 
 class TestStubs:
@@ -171,8 +187,8 @@ class TestStubs:
             low_price=Price.from_str("1.00001"),
             close_price=Price.from_str("1.00003"),
             volume=Quantity.from_int(1_000_000),
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -184,8 +200,8 @@ class TestStubs:
             low_price=Price.from_str("90.001"),
             close_price=Price.from_str("90.003"),
             volume=Quantity.from_int(1_000_000),
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -200,8 +216,8 @@ class TestStubs:
             ask=ask or Price.from_str("90.005"),
             bid_size=bid_volume or Quantity.from_int(1_000_000),
             ask_size=ask_volume or Quantity.from_int(1_000_000),
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -214,8 +230,8 @@ class TestStubs:
             ask=ask or Price.from_str("1.00003"),
             bid_size=Quantity.from_int(1_000_000),
             ask_size=Quantity.from_int(1_000_000),
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -228,8 +244,8 @@ class TestStubs:
             size=quantity or Quantity.from_int(100000),
             aggressor_side=aggressor_side or AggressorSide.BUY,
             match_id=TradeMatchId("123456"),
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -290,8 +306,8 @@ class TestStubs:
             level=level,
             bids=[(bid_price - i, bid_volume * (1 + i)) for i in range(bid_levels)],
             asks=[(ask_price + i, ask_volume * (1 + i)) for i in range(ask_levels)],
-            timestamp_origin_ns=0,
-            timestamp_ns=0,
+            ts_event_ns=0,
+            ts_recv_ns=0,
         )
 
     @staticmethod
@@ -326,7 +342,7 @@ class TestStubs:
             ],
             info={},
             event_id=uuid4(),
-            updated_ns=0,
+            ts_updated_ns=0,
             timestamp_ns=0,
         )
 
@@ -335,7 +351,7 @@ class TestStubs:
         return OrderSubmitted(
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
-            submitted_ns=0,
+            ts_submitted_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -348,7 +364,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=venue_order_id,
-            accepted_ns=0,
+            ts_accepted_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -359,7 +375,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             reason="ORDER_REJECTED",
-            rejected_ns=0,
+            ts_rejected_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -370,7 +386,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=order.venue_order_id,
-            pending_ns=0,
+            ts_pending_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -381,7 +397,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=order.venue_order_id,
-            pending_ns=0,
+            ts_pending_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -397,7 +413,7 @@ class TestStubs:
         last_qty=None,
         last_px=None,
         liquidity_side=LiquiditySide.TAKER,
-        execution_ns=0,
+        ts_filled_ns=0,
     ) -> OrderFilled:
         if venue_order_id is None:
             venue_order_id = VenueOrderId("1")
@@ -432,7 +448,7 @@ class TestStubs:
             currency=instrument.quote_currency,
             commission=commission,
             liquidity_side=liquidity_side,
-            execution_ns=execution_ns,
+            ts_filled_ns=ts_filled_ns,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -443,7 +459,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=order.venue_order_id,
-            canceled_ns=0,
+            ts_canceled_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -454,7 +470,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=order.venue_order_id,
-            expired_ns=0,
+            ts_expired_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )
@@ -465,7 +481,7 @@ class TestStubs:
             account_id=TestStubs.account_id(),
             client_order_id=order.client_order_id,
             venue_order_id=order.venue_order_id,
-            triggered_ns=0,
+            ts_triggered_ns=0,
             event_id=uuid4(),
             timestamp_ns=0,
         )

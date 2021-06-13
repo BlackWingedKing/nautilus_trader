@@ -3,7 +3,7 @@ name = "aiodns"
 version = "2.0.0"
 description = "Simple DNS resolver for asyncio"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -14,7 +14,7 @@ name = "aiohttp"
 version = "3.7.4.post0"
 description = "Async http client/server framework (asyncio)"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -71,7 +71,7 @@ name = "async-timeout"
 version = "3.0.1"
 description = "Timeout context manager for asyncio programs"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.5.3"
 
 [[package]]
@@ -112,7 +112,7 @@ name = "betfairlightweight"
 version = "2.12.1"
 description = "Lightweight python wrapper for Betfair API-NG"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -149,10 +149,10 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "ccxt"
-version = "1.50.91"
+version = "1.51.20"
 description = "A JavaScript / Python / PHP cryptocurrency trading library with support for 130+ exchanges"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -180,7 +180,7 @@ name = "cffi"
 version = "1.14.5"
 description = "Foreign Function Interface for Python calling C code."
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -207,7 +207,7 @@ name = "ciso8601"
 version = "2.1.3"
 description = "Fast ISO8601 date time parser for Python written in C"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [[package]]
@@ -232,8 +232,8 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "colorlog"
-version = "4.8.0"
-description = "Log formatting with colors!"
+version = "5.0.1"
+description = "Add colours to the output of Python's logging module."
 category = "dev"
 optional = false
 python-versions = "*"
@@ -254,7 +254,7 @@ name = "cryptography"
 version = "3.4.7"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -314,7 +314,7 @@ name = "eventkit"
 version = "0.8.7"
 description = "Event-driven data pipelines"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -361,7 +361,7 @@ name = "ib-insync"
 version = "0.9.66"
 description = "Python sync/async framework for Interactive Brokers API"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -370,7 +370,7 @@ nest-asyncio = "*"
 
 [[package]]
 name = "identify"
-version = "2.2.9"
+version = "2.2.10"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -489,7 +489,7 @@ name = "multidict"
 version = "5.1.0"
 description = "multidict implementation"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [[package]]
@@ -521,7 +521,7 @@ name = "nest-asyncio"
 version = "1.5.1"
 description = "Patch asyncio to allow nested event loops"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.5"
 
 [[package]]
@@ -534,7 +534,7 @@ python-versions = "*"
 
 [[package]]
 name = "nox"
-version = "2020.12.31"
+version = "2021.6.6"
 description = "Flexible test automation."
 category = "dev"
 optional = false
@@ -542,8 +542,9 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 argcomplete = ">=1.9.4,<2.0"
-colorlog = ">=2.6.1,<5.0.0"
+colorlog = ">=2.6.1,<7.0.0"
 importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
+packaging = ">=20.9"
 py = ">=1.4.0,<2.0.0"
 virtualenv = ">=14.0.0"
 
@@ -578,7 +579,7 @@ name = "oandapyv20"
 version = "0.6.3"
 description = "Python wrapper for the OANDA REST-V20 API"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [[package]]
@@ -586,7 +587,7 @@ name = "orjson"
 version = "3.5.1"
 description = "Fast, correct Python JSON library supporting dataclasses, datetimes, and numpy"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [[package]]
@@ -722,7 +723,7 @@ name = "pycares"
 version = "4.0.0"
 description = "Python interface for c-ares"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -744,7 +745,7 @@ name = "pycparser"
 version = "2.20"
 description = "C parser in Python"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
@@ -1176,7 +1177,7 @@ name = "yarl"
 version = "1.6.3"
 description = "Yet another URL library"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -1197,12 +1198,16 @@ docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [extras]
+betfair = ["betfairlightweight"]
+ccxt = ["ccxt"]
 docs = ["numpydoc"]
+ib = ["ib_insync"]
+oanda = ["oandapyV20"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.9"
-content-hash = "3e4b12834c8a0f6802c7c2fba8be449b774205bc023337b4296915a4b44111a3"
+content-hash = "b64b28048db38ce942bb45cacd3509da3cf8f5428238220b13fb7a7f1b114aa0"
 
 [metadata.files]
 aiodns = [
@@ -1289,8 +1294,8 @@ black = [
     {file = "black-21.5b2.tar.gz", hash = "sha256:1fc0e0a2c8ae7d269dfcf0c60a89afa299664f3e811395d40b1922dff8f854b5"},
 ]
 ccxt = [
-    {file = "ccxt-1.50.91-py2.py3-none-any.whl", hash = "sha256:8c339bd7d9ec73f7702bb1b6b15b4fb44bde8bea4c9df884dd4cadb53a773c85"},
-    {file = "ccxt-1.50.91.tar.gz", hash = "sha256:11ff1de84dfcba0fd3a0d9974125e28d1db2d210199ed88caefeb77f4fce4142"},
+    {file = "ccxt-1.51.20-py2.py3-none-any.whl", hash = "sha256:b9d4bf6be28e1f3d67b01fd94dc79c947bab32933160ddea49b8ebec2b26f00a"},
+    {file = "ccxt-1.51.20.tar.gz", hash = "sha256:0d8e90d4678712e3d15cadbb075152d9e265383820dc252fa85a009c5f7865e8"},
 ]
 certifi = [
     {file = "certifi-2021.5.30-py2.py3-none-any.whl", hash = "sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8"},
@@ -1355,8 +1360,8 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 colorlog = [
-    {file = "colorlog-4.8.0-py2.py3-none-any.whl", hash = "sha256:3dd15cb27e8119a24c1a7b5c93f9f3b455855e0f73993b1c25921b2f646f1dcd"},
-    {file = "colorlog-4.8.0.tar.gz", hash = "sha256:59b53160c60902c405cdec28d38356e09d40686659048893e026ecbd589516b1"},
+    {file = "colorlog-5.0.1-py2.py3-none-any.whl", hash = "sha256:4e6be13d9169254e2ded6526a6a4a1abb8ac564f2fa65b310a98e4ca5bea2c04"},
+    {file = "colorlog-5.0.1.tar.gz", hash = "sha256:f17c013a06962b02f4449ee07cfdbe6b287df29efc2c9a1515b4a376f4e588ea"},
 ]
 coverage = [
     {file = "coverage-4.5.4-cp26-cp26m-macosx_10_12_x86_64.whl", hash = "sha256:eee64c616adeff7db37cc37da4180a3a5b6177f5c46b187894e633f088fb5b28"},
@@ -1479,8 +1484,8 @@ ib-insync = [
     {file = "ib_insync-0.9.66.tar.gz", hash = "sha256:2b368380fc7e59726468aad0677cc269be2d5a1ae7198d2a2bc843d75bc85b44"},
 ]
 identify = [
-    {file = "identify-2.2.9-py2.py3-none-any.whl", hash = "sha256:96c57d493184daecc7299acdeef0ad7771c18a59931ea927942df393688fe849"},
-    {file = "identify-2.2.9.tar.gz", hash = "sha256:3a8493cf49cfe4b28d50865e38f942c11be07a7b0aab8e715073e17f145caacc"},
+    {file = "identify-2.2.10-py2.py3-none-any.whl", hash = "sha256:18d0c531ee3dbc112fa6181f34faa179de3f57ea57ae2899754f16a7e0ff6421"},
+    {file = "identify-2.2.10.tar.gz", hash = "sha256:5b41f71471bc738e7b586308c3fca172f78940195cb3bf6734c1e66fdac49306"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -1690,8 +1695,8 @@ nodeenv = [
     {file = "nodeenv-1.6.0.tar.gz", hash = "sha256:3ef13ff90291ba2a4a7a4ff9a979b63ffdd00a464dbe04acf0ea6471517a4c2b"},
 ]
 nox = [
-    {file = "nox-2020.12.31-py3-none-any.whl", hash = "sha256:f179d6990f7a0a9cebad01b9ecea34556518b8d3340dfcafdc1d85f2c1a37ea0"},
-    {file = "nox-2020.12.31.tar.gz", hash = "sha256:58a662070767ed4786beb46ce3a789fca6f1e689ed3ac15c73c4d0094e4f9dc4"},
+    {file = "nox-2021.6.6-py3-none-any.whl", hash = "sha256:1c935868a18c6e0bea0c8d2997612dcaaf464613d3c3c7620af8ff43b14326c8"},
+    {file = "nox-2021.6.6.tar.gz", hash = "sha256:ff894d2a134b0163147b43a72d5abb4348f307f100a52665a32a98a9ab8f244a"},
 ]
 numpy = [
     {file = "numpy-1.20.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:70eb5808127284c4e5c9e836208e09d685a7978b6a216db85960b1a112eeace8"},
